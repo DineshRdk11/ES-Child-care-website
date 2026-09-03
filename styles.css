@@ -1,0 +1,286 @@
+/* ES CHILD CARE CENTRE - Custom Medical Theme (Logo Branded) */
+:root {
+  --brand-pink: #d91b72;
+  --brand-pink-dark: #be185d;
+  --brand-pink-light: #fdf2f8;
+  --brand-green: #008744;
+  --brand-green-dark: #007038;
+  --brand-green-light: #f0fdf4;
+  --navy-deep: #0f172a;
+  --card-bg: #ffffff;
+  --border-color: #f1f5f9;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide Scrollbar for Carousel Slider */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Base typography */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+  background-color: #fafaf9;
+  overflow-x: hidden;
+}
+
+/* Brand Gradients */
+.brand-gradient-btn {
+  background: linear-gradient(135deg, #008744 0%, #16a34a 100%);
+}
+.brand-gradient-btn:hover {
+  background: linear-gradient(135deg, #007038 0%, #15803d 100%);
+}
+
+.brand-pink-gradient-btn {
+  background: linear-gradient(135deg, #d91b72 0%, #be185d 100%);
+}
+.brand-pink-gradient-btn:hover {
+  background: linear-gradient(135deg, #be185d 0%, #9d174d 100%);
+}
+
+.hero-bg-gradient {
+  background: radial-gradient(circle at 10% 15%, rgba(253, 242, 248, 0.8) 0%, rgba(240, 253, 244, 0.7) 50%, rgba(255, 255, 255, 1) 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #008744 0%, #d91b72 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pink-gradient-text {
+  background: linear-gradient(135deg, #d91b72 0%, #be185d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Navigation */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.45);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.08) translateY(-3px);
+}
+
+/* Doctor Image Frame Styling */
+.doctor-photo-frame {
+  position: relative;
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 135, 68, 0.18), 0 12px 24px -8px rgba(217, 27, 114, 0.12);
+}
+
+.doctor-photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2rem;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  pointer-events: none;
+}
+
+/* Card hover animation */
+.care-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+}
+
+.care-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 30px -10px rgba(0, 135, 68, 0.1), 0 10px 15px -5px rgba(217, 27, 114, 0.05);
+  border-color: #86efac;
+}
+
+/* Gallery Item & Carousel Slide Styling */
+.gallery-card {
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px -10px rgba(0, 135, 68, 0.15), 0 10px 20px -5px rgba(217, 27, 114, 0.08);
+}
+
+.gallery-card img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-card:hover img {
+  transform: scale(1.06);
+}
+
+/* CAROUSEL / SLIDER STYLES */
+.carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
+  cursor: grab;
+}
+
+.carousel-track:active {
+  cursor: grabbing;
+}
+
+.carousel-track.grid-mode {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  overflow-x: visible;
+  scroll-snap-type: none;
+  cursor: default;
+}
+
+@media (min-width: 768px) {
+  .carousel-track.grid-mode {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-track.grid-mode {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Slide Widths */
+.carousel-slide {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 86vw;
+  max-width: 380px;
+}
+
+@media (min-width: 640px) {
+  .carousel-slide {
+    width: calc(50% - 12px);
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-slide {
+    width: calc(33.333% - 16px);
+    max-width: none;
+  }
+}
+
+.carousel-track.grid-mode .carousel-slide {
+  width: 100%;
+  max-width: none;
+}
+
+/* Dynamic Carousel Pagination Dots */
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background-color: #cbd5e1;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.carousel-dot:hover {
+  background-color: #94a3b8;
+}
+
+.carousel-dot.active {
+  width: 28px;
+  background-color: #008744;
+}
+
+/* Lightbox Modal */
+#lightbox-modal {
+  transition: opacity 0.3s ease;
+}
+
+/* FAQ Accordion */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+  opacity: 0;
+}
+
+.faq-item.active .faq-answer {
+  opacity: 1;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+/* Notification Toast */
+#toast-notification {
+  transform: translateY(120px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+#toast-notification.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Pulse animation for live badge */
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 2s infinite cubic-bezier(0.45, 0, 0.55, 1);
+}
