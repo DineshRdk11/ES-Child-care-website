@@ -51,24 +51,26 @@
 <body class="bg-[#fafaf9] text-slate-800 antialiased selection:bg-[#d91b72] selection:text-white">
 
   <!-- TOP ANNOUNCEMENT & EMERGENCY BAR -->
-  <div class="bg-slate-900 text-white text-xs sm:text-sm py-2 px-4 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-      <div class="flex items-center space-x-4">
-        <span class="inline-flex items-center text-emerald-400 font-medium">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 mr-2 live-dot"></span>
-          Clinic Open Now &bull; Closes 9:00 PM
+  <div class="bg-slate-900 text-white text-xs py-2 px-3 sm:px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex justify-between items-center gap-2">
+      <div class="flex items-center space-x-2 sm:space-x-4">
+        <span class="inline-flex items-center text-emerald-400 font-medium text-[11px] sm:text-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 live-dot"></span>
+          <span class="sm:hidden">Open &bull; Closes 9 PM</span>
+          <span class="hidden sm:inline">Clinic Open Now &bull; Closes 9:00 PM</span>
         </span>
         <span class="hidden md:inline text-slate-500">|</span>
-        <span class="hidden md:inline text-slate-300">
+        <span class="hidden md:inline text-slate-300 text-xs">
           📍 K.K. Nagar, Tiruchirappalli, Tamil Nadu
         </span>
       </div>
-      <div class="flex items-center space-x-4 ml-auto">
-        <a href="tel:+916381486753" class="flex items-center text-brandpink-500 hover:text-brandpink-400 font-semibold transition">
-          <svg class="w-3.5 h-3.5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+      <div class="flex items-center">
+        <a href="tel:+916381486753" class="flex items-center text-brandpink-400 hover:text-brandpink-300 font-bold text-[11px] sm:text-xs transition">
+          <svg class="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
           </svg>
-          Helpline / Emergency: +91 63814 86753
+          <span class="sm:hidden">+91 63814 86753</span>
+          <span class="hidden sm:inline">Helpline / Emergency: +91 63814 86753</span>
         </a>
       </div>
     </div>
@@ -76,20 +78,21 @@
 
   <!-- MAIN NAVIGATION -->
   <nav id="main-navbar" class="sticky top-0 z-40 glass-nav transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-20">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
         
         <!-- Logo & Brand with Actual Logo Image -->
-        <a href="#home" class="flex items-center space-x-3 group">
-          <div class="relative">
-            <img src="images/logo.jpg" alt="ES Child Care Centre Logo" class="w-13 h-13 sm:w-14 sm:h-14 rounded-full object-contain bg-white p-0.5 border-2 border-brandgreen-700 shadow-md group-hover:scale-105 transition">
+        <a href="#home" class="flex items-center space-x-2 sm:space-x-3 group min-w-0 flex-1 sm:flex-initial">
+          <div class="relative flex-shrink-0">
+            <img src="images/logo.jpg" alt="ES Child Care Centre Logo" class="site-logo rounded-full object-contain bg-white p-0.5 border-2 border-brandgreen-700 shadow-md group-hover:scale-105 transition">
           </div>
-          <div>
-            <span class="text-lg sm:text-xl font-extrabold tracking-tight text-slate-900 block leading-tight">
+          <div class="min-w-0 pr-1">
+            <span class="text-sm sm:text-lg lg:text-xl font-extrabold tracking-tight text-slate-900 block leading-tight truncate">
               ES CHILD CARE <span class="text-brandgreen-700">CENTRE</span>
             </span>
-            <span class="text-[11px] sm:text-xs font-semibold text-brandpink-700 tracking-wide uppercase block">
-              Dr. Pratheep &bull; MD Paediatrics (Gold Medalist)
+            <span class="text-[10px] sm:text-xs font-semibold text-brandpink-700 tracking-wide uppercase block leading-tight mt-0.5 truncate">
+              <span class="sm:hidden">Dr. Pratheep &bull; Gold Medalist</span>
+              <span class="hidden sm:inline">Dr. Pratheep &bull; MD Paediatrics (Gold Medalist)</span>
             </span>
           </div>
         </a>
@@ -107,7 +110,7 @@
         </div>
 
         <!-- Desktop Action Buttons -->
-        <div class="hidden sm:flex items-center space-x-3">
+        <div class="hidden sm:flex items-center space-x-3 flex-shrink-0">
           <a href="https://wa.me/916381486753?text=Hello%20Dr.%20Pratheep,%20I%20would%20like%20to%20book%20an%20appointment%20for%20my%20child." target="_blank" rel="noopener" class="inline-flex items-center px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition">
             <svg class="w-4 h-4 mr-1.5 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
               <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
@@ -120,8 +123,8 @@
         </div>
 
         <!-- Mobile Hamburger Button -->
-        <div class="flex items-center lg:hidden">
-          <button id="mobile-menu-btn" type="button" aria-label="Open mobile menu" class="p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition">
+        <div class="flex items-center lg:hidden flex-shrink-0">
+          <button id="mobile-menu-btn" type="button" aria-label="Open mobile menu" class="p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
