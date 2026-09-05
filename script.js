@@ -450,20 +450,64 @@ document.addEventListener('DOMContentLoaded', () => {
   const toast = document.getElementById('toast-notification');
   const toastMessage = document.getElementById('toast-message');
 
-  function showToast(message, isSuccess = true) {
+  function showToast(messageHtml, isSuccess = true) {
     if (!toast) return;
-    if (toastMessage) toastMessage.textContent = message;
+    if (toastMessage) toastMessage.innerHTML = messageHtml;
     
-    toast.classList.remove('bg-red-600', 'bg-brandgreen-700');
-    toast.classList.add(isSuccess ? 'bg-brandgreen-700' : 'bg-red-600');
+    toast.classList.remove('bg-red-600', 'bg-brandgreen-700', 'bg-emerald-700');
+    toast.classList.add(isSuccess ? 'bg-emerald-700' : 'bg-red-600');
     toast.classList.add('show');
 
     setTimeout(() => {
       toast.classList.remove('show');
-    }, 5500);
+    }, 8000);
   }
 
   if (contactForm) {
+    const dateInput = document.getElementById('form-date');
+    const timeInput = document.getElementById('form-time');
+
+    // Function to dynamically show ONLY available slots based on selected day
+    function updateTimeSlots() {
+      if (!timeInput) return;
+
+      const isSunday = dateInput && dateInput.value && (new Date(dateInput.value + 'T00:00:00').getDay() === 0);
+
+      if (isSunday) {
+        // Show ONLY available Sunday slots
+        timeInput.innerHTML = `
+          <option value="Sunday Clinic (4:00 PM - 6:00 PM)">Sunday Evening: 4:00 PM – 6:00 PM</option>
+          <option value="Urgent / Earliest Available">Urgent / Earliest Available</option>
+        `;
+        timeInput.value = 'Sunday Clinic (4:00 PM - 6:00 PM)';
+      } else {
+        // Show standard Mon-Sat slots
+        const prevVal = timeInput.value;
+        timeInput.innerHTML = `
+          <option value="Morning (9:00 AM - 1:00 PM)">Morning: 9:00 AM – 1:00 PM (Mon–Sat)</option>
+          <option value="Afternoon (1:00 PM - 5:00 PM)">Afternoon: 1:00 PM – 5:00 PM (Mon–Sat)</option>
+          <option value="Evening (5:00 PM - 9:00 PM)">Evening: 5:00 PM – 9:00 PM (Mon–Sat)</option>
+          <option value="Urgent / Earliest Available">Urgent / Earliest Available</option>
+        `;
+        if (prevVal && !prevVal.includes('Sunday')) {
+          timeInput.value = prevVal;
+        } else {
+          timeInput.value = 'Morning (9:00 AM - 1:00 PM)';
+        }
+      }
+    }
+
+    // Restrict date picker to today onwards
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+
+      // Dynamically filter time slots when date changes
+      dateInput.addEventListener('change', updateTimeSlots);
+      dateInput.addEventListener('input', updateTimeSlots);
+      updateTimeSlots();
+    }
+
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -471,52 +515,66 @@ document.addEventListener('DOMContentLoaded', () => {
       const phoneInput = document.getElementById('form-email');
       const childInput = document.getElementById('form-child');
       const serviceInput = document.getElementById('form-service');
-      const dateInput = document.getElementById('form-date');
-      const timeInput = document.getElementById('form-time');
       const messageInput = document.getElementById('form-message');
       const submitBtn = contactForm.querySelector('button[type="submit"]');
 
-      if (!nameInput.value.trim() || !phoneInput.value.trim() || !messageInput.value.trim()) {
-        showToast('Please fill out all required fields (Parent Name, Phone, and Details).', false);
+      const parentName = nameInput ? nameInput.value.trim() : '';
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const childInfo = childInput && childInput.value.trim() ? childInput.value.trim() : 'Not specified';
+      const service = serviceInput ? serviceInput.value : 'General Paediatric Illness';
+      const dateVal = dateInput && dateInput.value ? dateInput.value : 'Earliest Available';
+      const timeVal = timeInput ? timeInput.value : 'Morning (9:00 AM - 1:00 PM)';
+      const notes = messageInput ? messageInput.value.trim() : '';
+
+      if (!parentName || !phone || !notes) {
+        showToast('Please fill out all required fields (Parent Name, Phone Number, and Symptoms/Notes).', false);
+        if (!parentName && nameInput) nameInput.focus();
+        else if (!phone && phoneInput) phoneInput.focus();
+        else if (!notes && messageInput) messageInput.focus();
         return;
       }
 
-      const originalText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `
-        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        Confirming with ES Child Care Centre...
-      `;
+      // Format WhatsApp message with clear markdown layout & emojis
+      const waMessage = 
+        `*APPOINTMENT REQUEST - ES CHILD CARE CENTRE*\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `*Parent / Guardian:* ${parentName}\n` +
+        `*Contact Phone:* ${phone}\n` +
+        `*Child Name & Age:* ${childInfo}\n` +
+        `*Consultation Type:* ${service}\n` +
+        `*Preferred Date:* ${dateVal}\n` +
+        `*Preferred Slot:* ${timeVal}\n` +
+        `*Symptoms / Notes:* ${notes}\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `_Sent via eschildcare.in appointment form_`;
 
+      const waUrl = `https://wa.me/916381486753?text=${encodeURIComponent(waMessage)}`;
+
+      // Immediate visual feedback on the button
+      const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4" stroke="currentColor"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Directing to WhatsApp...
+        `;
+      }
+
+      // Direct navigation straight to WhatsApp without any popup or modal
+      window.location.href = waUrl;
+
+      // Reset button and form after redirect
       setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-
-        const parentName = nameInput.value.trim();
-        const phone = phoneInput.value.trim();
-        const childInfo = childInput ? childInput.value.trim() : '';
-        const service = serviceInput ? serviceInput.value : '';
-        const dateVal = dateInput ? dateInput.value : '';
-        const timeVal = timeInput ? timeInput.value : '';
-        const notes = messageInput.value.trim();
-
-        const confirmationMsg = `Appointment request received for ${childInfo ? childInfo : 'your child'}! Our clinic will reach you at ${phone}.`;
-        showToast(confirmationMsg, true);
-
-        const waText = encodeURIComponent(
-          `Hello Dr. Pratheep,\n\nI would like to confirm an appointment at ES Child Care Centre:\n- Parent: ${parentName}\n- Contact: ${phone}\n- Child: ${childInfo}\n- Service: ${service}\n- Preferred Date: ${dateVal} (${timeVal})\n- Reason/Notes: ${notes}`
-        );
-        const waUrl = `https://wa.me/916381486753?text=${waText}`;
-        
-        if (toastMessage) {
-          toastMessage.innerHTML = `${confirmationMsg} <br><a href="${waUrl}" target="_blank" class="underline font-bold text-white mt-1 block">Click here to send details directly via WhatsApp &rarr;</a>`;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHTML;
         }
-
         contactForm.reset();
-      }, 900);
+        updateTimeSlots();
+      }, 2000);
     });
   }
 
